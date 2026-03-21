@@ -1,0 +1,41 @@
+{
+  "applicationId": "com.apextime.desktop",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "out/",
+  "url": "http://localhost:3000/widget",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "tokenSecurity": "one-time",
+  "logging": {
+    "enabled": true,
+    "writeToLogFile": true
+  },
+  "nativeAllowList": [
+    "os.*",
+    "window.*",
+    "computer.*"
+  ],
+  "modes": {
+    "window": {
+      "title": "ApexTime",
+      "width": 420,
+      "height": 680,
+      "minWidth": 400,
+      "minHeight": 500,
+      "center": true,
+      "resizable": true,
+      "maximize": false,
+      "icon": "/public/icon.png"
+    }
+  },
+  "cli": {
+    "binaryName": "apextime",
+    "resourcesPath": "/out/",
+    "extensionsPath": "/extensions/",
+    "clientLibrary": "/out/neutralino.js",
+    "binaryVersion": "6.5.0",
+    "clientVersion": "6.5.0"
+  }
+}

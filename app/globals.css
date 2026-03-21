@@ -1,0 +1,192 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+body {
+  font-family: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+@theme inline {
+  --font-heading: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Light mode slate overrides — remap slate-* Tailwind classes
+ * so hardcoded dark-mode classes (bg-slate-900, text-slate-100, etc.)
+ * look correct in light mode without changing every file.
+ */
+:root:not(.dark) {
+  --color-slate-50:  #f8fafc;
+  --color-slate-100: #1e293b;  /* was light → now dark text */
+  --color-slate-200: #334155;  /* was light → now medium-dark text */
+  --color-slate-300: #475569;
+  --color-slate-400: #64748b;  /* muted text stays */
+  --color-slate-500: #94a3b8;  /* muted text stays */
+  --color-slate-600: #cbd5e1;  /* borders: light gray */
+  --color-slate-700: #e2e8f0;  /* borders: lighter */
+  --color-slate-800: #e2e8f0;  /* card borders: light */
+  --color-slate-900: #ffffff;  /* card bg: white */
+  --color-slate-950: #f8fafc;  /* page bg: near-white */
+}
+
+/* Light mode — clean, professional with depth */
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #334155;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eef2ff;
+  --accent-foreground: #3730a3;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #4f46e5;
+  --chart-1: #4f46e5;
+  --chart-2: #7c3aed;
+  --chart-3: #a78bfa;
+  --chart-4: #818cf8;
+  --chart-5: #6366f1;
+  --radius: 0.625rem;
+  --sidebar: #fafbfc;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eef2ff;
+  --sidebar-accent-foreground: #3730a3;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #4f46e5;
+}
+
+/* Dark mode — primary theme (Indigo/Slate) */
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+  --card: #1e293b;
+  --card-foreground: #f1f5f9;
+  --popover: #1e293b;
+  --popover-foreground: #f1f5f9;
+  --primary: #6366f1;
+  --primary-foreground: #f8fafc;
+  --secondary: #334155;
+  --secondary-foreground: #f1f5f9;
+  --muted: #334155;
+  --muted-foreground: #94a3b8;
+  --accent: #334155;
+  --accent-foreground: #f1f5f9;
+  --destructive: #ef4444;
+  --border: #334155;
+  --input: #334155;
+  --ring: #6366f1;
+  --chart-1: #6366f1;
+  --chart-2: #8b5cf6;
+  --chart-3: #a78bfa;
+  --chart-4: #818cf8;
+  --chart-5: #4f46e5;
+  --sidebar: #1e293b;
+  --sidebar-foreground: #f1f5f9;
+  --sidebar-primary: #6366f1;
+  --sidebar-primary-foreground: #f8fafc;
+  --sidebar-accent: #334155;
+  --sidebar-accent-foreground: #f1f5f9;
+  --sidebar-border: #334155;
+  --sidebar-ring: #6366f1;
+}
+
+/* Light mode polish */
+:root:not(.dark) {
+  /* Cards get subtle shadow instead of borders for depth */
+  .rounded-xl {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Green active states need darker text in light mode */
+  .text-green-400 { color: #16a34a; }
+  .text-green-300 { color: #15803d; }
+  .bg-green-400 { background-color: #22c55e; }
+
+  /* Amber states */
+  .text-amber-400 { color: #d97706; }
+  .text-amber-300 { color: #b45309; }
+
+  /* Indigo states — slightly darker for contrast */
+  .text-indigo-400 { color: #4f46e5; }
+  .text-indigo-300 { color: #4338ca; }
+
+  /* Red/destructive */
+  .text-red-400 { color: #dc2626; }
+
+  /* Cyan for testing status */
+  .text-cyan-400 { color: #0891b2; }
+
+  /* Orange for on-hold */
+  .text-orange-400 { color: #ea580c; }
+
+  /* Violet */
+  .text-violet-400 { color: #7c3aed; }
+}
