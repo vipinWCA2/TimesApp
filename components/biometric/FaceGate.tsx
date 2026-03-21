@@ -11,6 +11,9 @@ interface FaceGateProps {
   onVerified: () => void;
 }
 
+const ROLLING_WINDOW = 5;
+const DETECTION_OPTIONS = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.3 });
+
 export function FaceGate({ storedDescriptor, onVerified }: FaceGateProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -21,6 +24,7 @@ export function FaceGate({ storedDescriptor, onVerified }: FaceGateProps) {
   const [error, setError] = useState<string | null>(null);
 
   const storedFloat32 = useRef(new Float32Array(storedDescriptor));
+  const recentScores = useRef<number[]>([]);
 
   // Cleanup camera on unmount — CRITICAL per CLAUDE.md
   useEffect(() => {
@@ -62,7 +66,7 @@ export function FaceGate({ storedDescriptor, onVerified }: FaceGateProps) {
     }
 
     const detection = await faceapi
-      .detectSingleFace(video)
+      .detectSingleFace(video, DETECTION_OPTIONS)
       .withFaceLandmarks()
       .withFaceDescriptor();
 
@@ -71,9 +75,19 @@ export function FaceGate({ storedDescriptor, onVerified }: FaceGateProps) {
         detection.descriptor,
         storedFloat32.current
       );
-      setScore(matchScore);
 
-      if (isMatch(matchScore)) {
+      // Rolling average over last N frames to smooth out noise
+      recentScores.current.push(matchScore);
+      if (recentScores.current.length > ROLLING_WINDOW) {
+        recentScores.current.shift();
+      }
+      const avgScore =
+        recentScores.current.reduce((a, b) => a + b, 0) /
+        recentScores.current.length;
+
+      setScore(avgScore);
+
+      if (isMatch(avgScore)) {
         setVerified(true);
         // Stop camera after verification
         streamRef.current?.getTracks().forEach((track) => track.stop());
