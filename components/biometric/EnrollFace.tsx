@@ -9,6 +9,9 @@ interface EnrollFaceProps {
   onEnroll: (descriptor: number[]) => void;
 }
 
+const DETECTION_OPTIONS = new faceapi.SsdMobilenetv1Options({ minConfidence: 0.3 });
+const ENROLL_SAMPLES = 3;
+
 export function EnrollFace({ onEnroll }: EnrollFaceProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -57,7 +60,7 @@ export function EnrollFace({ onEnroll }: EnrollFaceProps) {
     }
 
     const detection = await faceapi
-      .detectSingleFace(video)
+      .detectSingleFace(video, DETECTION_OPTIONS)
       .withFaceLandmarks()
       .withFaceDescriptor();
 
@@ -76,14 +79,33 @@ export function EnrollFace({ onEnroll }: EnrollFaceProps) {
     if (!videoRef.current) return;
     setCapturing(true);
 
-    const detection = await faceapi
-      .detectSingleFace(videoRef.current)
-      .withFaceLandmarks()
-      .withFaceDescriptor();
+    // Capture multiple samples and average for a more robust descriptor
+    const descriptors: Float32Array[] = [];
+    for (let i = 0; i < ENROLL_SAMPLES; i++) {
+      const detection = await faceapi
+        .detectSingleFace(videoRef.current, DETECTION_OPTIONS)
+        .withFaceLandmarks()
+        .withFaceDescriptor();
 
-    if (detection) {
+      if (detection) {
+        descriptors.push(detection.descriptor);
+      }
+      // Brief delay between samples for slight natural variation
+      if (i < ENROLL_SAMPLES - 1) {
+        await new Promise((r) => setTimeout(r, 300));
+      }
+    }
+
+    if (descriptors.length > 0) {
+      // Average all captured descriptors for a stable enrollment
+      const avg = new Float32Array(128);
+      for (const d of descriptors) {
+        for (let j = 0; j < 128; j++) avg[j] += d[j];
+      }
+      for (let j = 0; j < 128; j++) avg[j] /= descriptors.length;
+
       // Only store the 128-float descriptor — NEVER raw images
-      const descriptor = Array.from(detection.descriptor);
+      const descriptor = Array.from(avg);
       streamRef.current?.getTracks().forEach((track) => track.stop());
       cancelAnimationFrame(rafRef.current);
       onEnroll(descriptor);

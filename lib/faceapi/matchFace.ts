@@ -17,5 +17,5 @@ export function computeMatchScore(
 }
 
 export function isMatch(score: number): boolean {
-  return score > 0.9;
+  return score > 0.6;
 }
