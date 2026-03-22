@@ -137,14 +137,14 @@ export default function UsersPage() {
                     </TableCell>
                     <TableCell>
                       {user.face_descriptor && user.face_descriptor.length > 0 ? (
-                        <Badge variant="default" className="bg-green-600">Yes</Badge>
+                        <Badge variant="default" className="border-0 bg-green-500/15 text-green-400">Yes</Badge>
                       ) : (
                         <Badge variant="secondary">No</Badge>
                       )}
                     </TableCell>
                     <TableCell>
                       {user.is_online ? (
-                        <Badge variant="default" className="bg-green-600">Online</Badge>
+                        <Badge variant="default" className="border-0 bg-green-500/15 text-green-400">Online</Badge>
                       ) : (
                         <Badge variant="secondary">Offline</Badge>
                       )}

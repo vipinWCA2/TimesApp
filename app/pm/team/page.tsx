@@ -97,7 +97,7 @@ export default function TeamPage() {
                   </TableCell>
                   <TableCell>
                     {profile.is_online ? (
-                      <Badge variant="default" className="bg-green-600">Online</Badge>
+                      <Badge variant="default" className="border-0 bg-green-500/15 text-green-400">Online</Badge>
                     ) : (
                       <Badge variant="secondary">Offline</Badge>
                     )}

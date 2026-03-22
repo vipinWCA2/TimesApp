@@ -145,9 +145,10 @@ export function TeamYearlyActivity() {
 
             return (
               <div key={emp.user_id} className="border-b border-border last:border-b-0">
-                <button
+                <Button
+                  variant="ghost"
                   onClick={() => setExpandedUser(isExpanded ? null : emp.user_id)}
-                  className="grid w-full grid-cols-16 items-center gap-0 px-4 py-3 text-left transition-colors hover:bg-accent/50"
+                  className="grid h-auto w-full grid-cols-16 items-center gap-0 rounded-none px-4 py-3 text-left transition-colors hover:bg-accent/50"
                 >
                   {/* Name */}
                   <div className="col-span-3 flex items-center gap-2">
@@ -184,7 +185,7 @@ export function TeamYearlyActivity() {
                       </div>
                     </div>
                   ))}
-                </button>
+                </Button>
 
                 {/* Expanded detail */}
                 {isExpanded && (

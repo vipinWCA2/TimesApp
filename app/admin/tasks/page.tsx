@@ -8,6 +8,13 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -60,7 +67,7 @@ const columns: { id: TaskStatus; label: string; color: string; dotColor: string 
 
 const priorityConfig: Record<TaskPriority, { label: string; bg: string; text: string; border: string }> = {
   low: { label: "Low", bg: "bg-slate-500/10", text: "text-slate-400", border: "border-slate-500/20" },
-  medium: { label: "Medium", bg: "bg-blue-500/10", text: "text-blue-400", border: "border-blue-500/20" },
+  medium: { label: "Medium", bg: "bg-indigo-500/10", text: "text-indigo-400", border: "border-indigo-500/20" },
   high: { label: "High", bg: "bg-red-500/10", text: "text-red-400", border: "border-red-500/20" },
 };
 
@@ -244,12 +251,14 @@ export default function AdminTasksPage() {
                               </p>
                             )}
                           </div>
-                          <button
+                          <Button
+                            variant="ghost"
+                            size="icon"
                             onClick={() => handleDelete(task.id)}
-                            className="rounded p-0.5 text-slate-600 opacity-0 transition-all hover:text-red-400 group-hover:opacity-100"
+                            className="h-6 w-6 text-slate-600 opacity-0 transition-all hover:text-red-400 group-hover:opacity-100"
                           >
                             <Trash2 className="h-3 w-3" />
-                          </button>
+                          </Button>
                         </div>
 
                         {/* Meta */}
@@ -350,43 +359,44 @@ export default function AdminTasksPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-slate-400">Project</Label>
-                <select
-                  value={projectId}
-                  onChange={(e) => setProjectId(e.target.value)}
-                  className="h-9 rounded-md border border-slate-700 bg-slate-800/50 px-4 text-sm text-slate-300"
-                >
-                  <option value="">Select project</option>
-                  {projects.map((p) => (
-                    <option key={p.id} value={p.id}>{p.name}</option>
-                  ))}
-                </select>
+                <Select value={projectId} onValueChange={(v) => setProjectId(v ?? "")}>
+                  <SelectTrigger className="border-slate-700 bg-slate-800/50">
+                    <SelectValue placeholder="Select project" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {projects.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>{p.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-slate-400">Assign To</Label>
-                <select
-                  value={assignedTo}
-                  onChange={(e) => setAssignedTo(e.target.value)}
-                  className="h-9 rounded-md border border-slate-700 bg-slate-800/50 px-4 text-sm text-slate-300"
-                >
-                  <option value="">Select employee</option>
-                  {employees.map((e) => (
-                    <option key={e.user_id} value={e.user_id}>{e.full_name}</option>
-                  ))}
-                </select>
+                <Select value={assignedTo} onValueChange={(v) => setAssignedTo(v ?? "")}>
+                  <SelectTrigger className="border-slate-700 bg-slate-800/50">
+                    <SelectValue placeholder="Select employee" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {employees.map((e) => (
+                      <SelectItem key={e.user_id} value={e.user_id}>{e.full_name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4">
               <div className="flex flex-col gap-2">
                 <Label className="text-slate-400">Priority</Label>
-                <select
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value as TaskPriority)}
-                  className="h-9 rounded-md border border-slate-700 bg-slate-800/50 px-4 text-sm text-slate-300"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
+                <Select value={priority} onValueChange={(v) => setPriority(v as TaskPriority)}>
+                  <SelectTrigger className="border-slate-700 bg-slate-800/50">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="flex flex-col gap-2">
                 <Label className="text-slate-400">Est. Hours</Label>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { getLocalScreenshots } from "./ActivityTracker";
+import { Button } from "@/components/ui/button";
 import {
   Activity,
   Clock,
@@ -216,9 +217,10 @@ export function ActivityProgress({ userId, showScreenshots = true }: ActivityPro
       {/* Screenshots */}
       {showScreenshots && data.screenshots.length > 0 && (
         <div className="rounded-xl border border-border bg-card shadow-sm">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setExpandScreenshots(!expandScreenshots)}
-            className="flex w-full items-center justify-between border-b border-border px-4 py-4"
+            className="flex h-auto w-full items-center justify-between rounded-none border-b border-border px-4 py-4"
           >
             <div className="flex items-center gap-2">
               <Camera className="h-4 w-4 text-primary" />
@@ -232,7 +234,7 @@ export function ActivityProgress({ userId, showScreenshots = true }: ActivityPro
             ) : (
               <ChevronDown className="h-4 w-4 text-muted-foreground" />
             )}
-          </button>
+          </Button>
 
           {expandScreenshots && (
             <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -247,13 +249,13 @@ export function ActivityProgress({ userId, showScreenshots = true }: ActivityPro
                     className="h-auto w-full object-cover"
                   />
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-                    <p className="text-xs font-medium text-white">
+                    <p className="text-xs font-medium text-slate-100">
                       {new Date(ss.created_at).toLocaleTimeString("en-US", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-slate-400">
                       {new Date(ss.created_at).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",

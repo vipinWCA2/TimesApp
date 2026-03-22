@@ -21,6 +21,13 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { FolderKanban, Plus, Trash2, Building2 } from "lucide-react";
 
 interface Project {
@@ -178,12 +185,14 @@ export default function AdminProjectsPage() {
                     {new Date(project.created_at).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <button
+                    <Button
+                      variant="ghost"
+                      size="icon"
                       onClick={() => handleDelete(project.id)}
-                      className="rounded-lg p-1 text-slate-500 transition-colors hover:bg-red-500/10 hover:text-red-400"
+                      className="h-8 w-8 text-slate-500 hover:bg-red-500/10 hover:text-red-400"
                     >
                       <Trash2 className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -210,29 +219,29 @@ export default function AdminProjectsPage() {
             </div>
             <div className="flex flex-col gap-2">
               <Label className="text-slate-400">Department</Label>
-              <select
-                value={deptId}
-                onChange={(e) => setDeptId(e.target.value)}
-                className="h-9 rounded-md border border-slate-700 bg-slate-800/50 px-4 text-sm text-slate-300"
-              >
-                <option value="">Select department</option>
-                {departments.map((d) => (
-                  <option key={d.id} value={d.id}>{d.name}</option>
-                ))}
-              </select>
+              <Select value={deptId} onValueChange={(v) => setDeptId(v ?? "")}>
+                <SelectTrigger className="border-slate-700 bg-slate-800/50">
+                  <SelectValue placeholder="Select department" />
+                </SelectTrigger>
+                <SelectContent>
+                  {departments.map((d) => (
+                    <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="flex flex-col gap-2">
               <Label className="text-slate-400">Project Manager</Label>
-              <select
-                value={pmId}
-                onChange={(e) => setPmId(e.target.value)}
-                className="h-9 rounded-md border border-slate-700 bg-slate-800/50 px-4 text-sm text-slate-300"
-              >
-                <option value="">Select manager</option>
-                {pms.map((p) => (
-                  <option key={p.user_id} value={p.user_id}>{p.full_name}</option>
-                ))}
-              </select>
+              <Select value={pmId} onValueChange={(v) => setPmId(v ?? "")}>
+                <SelectTrigger className="border-slate-700 bg-slate-800/50">
+                  <SelectValue placeholder="Select manager" />
+                </SelectTrigger>
+                <SelectContent>
+                  {pms.map((p) => (
+                    <SelectItem key={p.user_id} value={p.user_id}>{p.full_name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <DialogFooter>

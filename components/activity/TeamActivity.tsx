@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Activity,
   Clock,
@@ -137,9 +138,10 @@ export function TeamActivity() {
 
           return (
             <div key={emp.user_id}>
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => setExpandedUser(isExpanded ? null : emp.user_id)}
-                className="flex w-full items-center gap-4 px-4 py-4 text-left transition-colors hover:bg-slate-800/30"
+                className="flex h-auto w-full items-center gap-4 rounded-none px-4 py-4 text-left transition-colors hover:bg-slate-800/30"
               >
                 {/* Avatar */}
                 <div className="relative">
@@ -190,7 +192,7 @@ export function TeamActivity() {
                 ) : (
                   <ChevronDown className="h-4 w-4 text-slate-500" />
                 )}
-              </button>
+              </Button>
 
               {/* Expanded: Screenshots */}
               {isExpanded && emp.screenshots.length > 0 && (

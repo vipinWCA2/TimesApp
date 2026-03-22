@@ -17,6 +17,7 @@ import {
   ClipboardList,
   AlertTriangle,
 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ActivityTracker } from "@/components/activity/ActivityTracker";
 import type { TaskStatus, TaskPriority } from "@/lib/types/database";
 
@@ -54,7 +55,7 @@ type WidgetTab = "tasks" | "logs";
 
 const priorityColors: Record<TaskPriority, string> = {
   low: "text-slate-400 bg-slate-500/15",
-  medium: "text-blue-400 bg-blue-500/15",
+  medium: "text-indigo-400 bg-indigo-500/15",
   high: "text-red-400 bg-red-500/15",
 };
 
@@ -382,7 +383,7 @@ export default function WidgetPage() {
       <div className="w-96 rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl shadow-black/40">
         <div className="flex items-center gap-2 border-b border-slate-800 px-4 py-4">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600">
-            <Timer className="h-4 w-4 text-white" />
+            <Timer className="h-4 w-4 text-slate-100" />
           </div>
           <span className="text-sm font-bold text-slate-100">
             Apex<span className="text-indigo-400">Time</span>
@@ -455,12 +456,14 @@ export default function WidgetPage() {
             </p>
           </div>
         </div>
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={handleSignOut}
-          className="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-300"
+          className="h-8 w-8 text-slate-500 hover:bg-slate-800 hover:text-slate-300"
         >
           <LogOut className="h-4 w-4" />
-        </button>
+        </Button>
       </div>
 
       {/* Activity Tracker (background — sends pings + screenshots while timer runs) */}
@@ -509,35 +512,29 @@ export default function WidgetPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex border-b border-slate-800">
-        <button
-          onClick={() => setActiveTab("tasks")}
-          className={`flex flex-1 items-center justify-center gap-2 py-2 text-xs font-medium transition-colors ${
-            activeTab === "tasks"
-              ? "border-b-2 border-indigo-500 text-indigo-400"
-              : "text-slate-500 hover:text-slate-300"
-          }`}
-        >
-          <ClipboardList className="h-3 w-3" />
-          My Tasks
-          {tasks.length > 0 && (
-            <span className="rounded-full bg-indigo-600/20 px-1 text-xs text-indigo-400">
-              {tasks.length}
-            </span>
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab("logs")}
-          className={`flex flex-1 items-center justify-center gap-2 py-2 text-xs font-medium transition-colors ${
-            activeTab === "logs"
-              ? "border-b-2 border-indigo-500 text-indigo-400"
-              : "text-slate-500 hover:text-slate-300"
-          }`}
-        >
-          <Clock className="h-3 w-3" />
-          Time Logs
-        </button>
-      </div>
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as WidgetTab)} className="border-b border-slate-800">
+        <TabsList className="h-auto w-full rounded-none border-0 bg-transparent p-0">
+          <TabsTrigger
+            value="tasks"
+            className="flex-1 gap-2 rounded-none border-b-2 border-transparent py-2 text-xs font-medium text-slate-500 data-[state=active]:border-indigo-500 data-[state=active]:bg-transparent data-[state=active]:text-indigo-400 data-[state=active]:shadow-none"
+          >
+            <ClipboardList className="h-3 w-3" />
+            My Tasks
+            {tasks.length > 0 && (
+              <span className="rounded-full bg-indigo-600/20 px-1 text-xs text-indigo-400">
+                {tasks.length}
+              </span>
+            )}
+          </TabsTrigger>
+          <TabsTrigger
+            value="logs"
+            className="flex-1 gap-2 rounded-none border-b-2 border-transparent py-2 text-xs font-medium text-slate-500 data-[state=active]:border-indigo-500 data-[state=active]:bg-transparent data-[state=active]:text-indigo-400 data-[state=active]:shadow-none"
+          >
+            <Clock className="h-3 w-3" />
+            Time Logs
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       {/* Tasks Tab */}
       {activeTab === "tasks" && (

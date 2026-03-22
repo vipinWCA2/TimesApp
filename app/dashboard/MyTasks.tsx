@@ -34,8 +34,8 @@ const allColumns: { id: TaskStatus; label: string; dotColor: string; headerBg: s
 
 const priorityConfig: Record<TaskPriority, { label: string; class: string }> = {
   low: { label: "Low", class: "bg-secondary text-muted-foreground" },
-  medium: { label: "Med", class: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-400" },
-  high: { label: "High", class: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-400" },
+  medium: { label: "Med", class: "bg-indigo-500/15 text-indigo-400" },
+  high: { label: "High", class: "bg-red-500/15 text-red-400" },
 };
 
 export function MyTasks({ userId, userRole }: { userId: string; userRole: Role }) {

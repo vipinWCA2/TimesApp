@@ -173,7 +173,7 @@ export default function EditUserPage() {
             </div>
           ) : (
             <div className="flex flex-col gap-4">
-              <p className="text-sm text-yellow-400">No face descriptor enrolled.</p>
+              <p className="text-sm text-amber-400">No face descriptor enrolled.</p>
               <Button onClick={() => setShowEnroll(true)}>
                 Enroll Face
               </Button>
