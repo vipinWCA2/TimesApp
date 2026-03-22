@@ -361,7 +361,9 @@ export default function AdminTasksPage() {
                 <Label className="text-slate-400">Project</Label>
                 <Select value={projectId} onValueChange={(v) => setProjectId(v ?? "")}>
                   <SelectTrigger className="border-slate-700 bg-slate-800/50">
-                    <SelectValue placeholder="Select project" />
+                    <SelectValue placeholder="Select project">
+                      {projects.find((p) => p.id === projectId)?.name ?? "Select project"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {projects.map((p) => (
@@ -374,7 +376,9 @@ export default function AdminTasksPage() {
                 <Label className="text-slate-400">Assign To</Label>
                 <Select value={assignedTo} onValueChange={(v) => setAssignedTo(v ?? "")}>
                   <SelectTrigger className="border-slate-700 bg-slate-800/50">
-                    <SelectValue placeholder="Select employee" />
+                    <SelectValue placeholder="Select employee">
+                      {employees.find((e) => e.user_id === assignedTo)?.full_name ?? "Select employee"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     {employees.map((e) => (

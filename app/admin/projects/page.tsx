@@ -221,7 +221,9 @@ export default function AdminProjectsPage() {
               <Label className="text-slate-400">Department</Label>
               <Select value={deptId} onValueChange={(v) => setDeptId(v ?? "")}>
                 <SelectTrigger className="border-slate-700 bg-slate-800/50">
-                  <SelectValue placeholder="Select department" />
+                  <SelectValue placeholder="Select department">
+                    {departments.find((d) => d.id === deptId)?.name ?? "Select department"}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {departments.map((d) => (
@@ -234,7 +236,9 @@ export default function AdminProjectsPage() {
               <Label className="text-slate-400">Project Manager</Label>
               <Select value={pmId} onValueChange={(v) => setPmId(v ?? "")}>
                 <SelectTrigger className="border-slate-700 bg-slate-800/50">
-                  <SelectValue placeholder="Select manager" />
+                  <SelectValue placeholder="Select manager">
+                    {pms.find((p) => p.user_id === pmId)?.full_name ?? "Select manager"}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {pms.map((p) => (

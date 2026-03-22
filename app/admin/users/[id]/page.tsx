@@ -130,7 +130,9 @@ export default function EditUserPage() {
             <Label>Department</Label>
             <Select value={deptId} onValueChange={(v) => setDeptId(v ?? "")}>
               <SelectTrigger>
-                <SelectValue placeholder="Select department" />
+                <SelectValue placeholder="Select department">
+                  {departments.find((d) => d.id === deptId)?.name ?? "Select department"}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {departments.map((dept) => (
